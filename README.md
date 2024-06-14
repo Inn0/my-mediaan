@@ -13,7 +13,7 @@ This pet project was created by [Daan Brocatus](https://github.com/Inn0) and [Iv
 
 ## Collaboration rules
 1. Branching strategy - [Trunk-based workflow](https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development); create short-lived branches and regularly integrate them into `main` branch
-2. Branch naming convention - `typeOfBranch-issueNumber-descriptiveBranchTitle` (examples: `feature/1-create-basic-navigation-panel`, `release/v0.1`, `bugfix/22-navigation-doesnt-work-in-landscape-mode`)
+2. Branch naming convention - `typeOfBranch/issueNumber-descriptiveBranchTitle` (examples: `feature/1-create-basic-navigation-panel`, `release/v0.1`, `bugfix/22-navigation-doesnt-work-in-landscape-mode`)
 4. Design patterns - [Model-View-ViewModel](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)
 5. Development conventions - keep `main` ready-to-deploy at all times; use [feature-flags](https://martinfowler.com/articles/feature-toggles.html) for potentially breaking changes
 6. Conventional commits - keep a clear and concise commit history using the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/)
