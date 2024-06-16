@@ -24,11 +24,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun MyMediaanAppPreview() {
-    MyMediaanTheme {
-        MyMediaanApp()
-    }
-}
