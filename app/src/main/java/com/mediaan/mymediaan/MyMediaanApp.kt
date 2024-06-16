@@ -9,6 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 
+enum class MyMediaanScreen() {
+    MyProfile,
+    DiscoverColleague
+}
+
 @Composable
 fun MyMediaanApp() {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
