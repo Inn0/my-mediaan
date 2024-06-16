@@ -10,8 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 
 enum class MyMediaanScreen() {
-    MyProfile,
-    DiscoverColleague
+    DiscoverColleague,
+    MyProfile
 }
 
 @Composable
