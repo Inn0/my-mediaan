@@ -19,7 +19,7 @@ enum class MyMediaanScreen(@StringRes val title: Int) {
     MyProfile(title = R.string.my_profile)
 }
 
-class MainNavigationViewModel: ViewModel() {
+class MainNavigationViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MainNavigationUiState())
     val uiState: StateFlow<MainNavigationUiState> = _uiState.asStateFlow()
 
