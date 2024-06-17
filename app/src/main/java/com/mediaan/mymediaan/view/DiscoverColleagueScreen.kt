@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.mediaan.mymediaan.MyMediaanScreen
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
+import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 
 @Composable
 fun DiscoverColleagueScreen(
