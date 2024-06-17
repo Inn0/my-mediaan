@@ -1,15 +1,9 @@
 package com.mediaan.mymediaan
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -35,29 +29,9 @@ import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
 import com.mediaan.mymediaan.view.MyProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
+import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-enum class MyMediaanScreen(@StringRes val title: Int) {
-    DiscoverColleague(title = R.string.discover_colleague),
-    MyProfile(title = R.string.my_profile)
-}
-
-// TODO: move to MainNavigationViewModel
-private val drawerItems = arrayOf(
-    DrawerItem(
-        Icons.Filled.Search,
-        Icons.Outlined.Search,
-        MyMediaanScreen.DiscoverColleague.name,
-        MyMediaanScreen.DiscoverColleague.name
-    ),
-    DrawerItem(
-        Icons.Filled.Person,
-        Icons.Outlined.Person,
-        MyMediaanScreen.MyProfile.name,
-        MyMediaanScreen.MyProfile.name
-    )
-)
 
 @Composable
 private fun DrawerContent(
@@ -105,7 +79,7 @@ fun MainNavigation(
             ModalDrawerSheet {
                 DrawerContent(
                     viewModel = mainNavigationViewModel,
-                    items = drawerItems
+                    items = mainNavigationViewModel.drawerItems
                 ) { route ->
                     coroutineScope.launch {
                         drawerState.close()
