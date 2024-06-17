@@ -19,14 +19,13 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,6 +34,7 @@ import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
 import com.mediaan.mymediaan.view.MyProfileScreen
+import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -61,13 +61,11 @@ private val drawerItems = arrayOf(
 
 @Composable
 private fun DrawerContent(
+    viewModel: MainNavigationViewModel,
     items: Array<DrawerItem>,
-    onMenuClick: (String) -> Unit
+    onMenuClick: (String) -> Unit // TODO: check if this is actually needed?
 ) {
-    // TODO: move to MainNavigationViewModel
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
+    val mainNavigationUiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -78,15 +76,15 @@ private fun DrawerContent(
                 label = { Text(text = item.title) },
                 icon = {
                     Icon(
-                        imageVector = if (index == selectedItemIndex) {
+                        imageVector = if (index == mainNavigationUiState.currentSelectedItemIndex) {
                             item.selectedIcon
                         } else item.unselectedIcon,
                         contentDescription = item.title
                     )
                 },
-                selected = index == selectedItemIndex,
+                selected = index == mainNavigationUiState.currentSelectedItemIndex,
                 onClick = {
-                    selectedItemIndex = index
+                    viewModel.updateSelectedItemIndex(index)
                     onMenuClick(item.route)
                 }
             )
@@ -98,13 +96,17 @@ private fun DrawerContent(
 fun MainNavigation(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    mainNavigationViewModel: MainNavigationViewModel = viewModel()
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                DrawerContent(drawerItems) { route ->
+                DrawerContent(
+                    viewModel = mainNavigationViewModel,
+                    items = drawerItems
+                ) { route ->
                     coroutineScope.launch {
                         drawerState.close()
                     }
