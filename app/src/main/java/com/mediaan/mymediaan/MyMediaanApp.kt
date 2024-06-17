@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 private fun DrawerContent(
     viewModel: MainNavigationViewModel,
     items: Array<DrawerItem>,
-    onMenuClick: (String) -> Unit // TODO: check if this is actually needed?
+    onMenuClick: (String) -> Unit
 ) {
     val mainNavigationUiState by viewModel.uiState.collectAsState()
 
