@@ -30,10 +30,12 @@ fun ProfileCard(
         modifier = Modifier
             .fillMaxSize()
             .padding(PaddingValues(start = 16.dp, bottom = 16.dp, end = 16.dp))
+            .clickable(onClick = onClick)
     ) {
-        Row(modifier = Modifier
-            .padding(8.dp)
-            .clickable(onClick = onClick), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 painter = painterResource(id = profile.avatarIcon),
                 contentDescription = "avatarIcon",
