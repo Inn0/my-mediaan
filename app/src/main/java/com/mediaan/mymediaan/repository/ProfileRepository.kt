@@ -1,5 +1,6 @@
 package com.mediaan.mymediaan.repository
 
+import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.Office
 import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
@@ -19,7 +20,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I have a pet snake", false),
                 TwoTruthsOneLieEntity("I can speak 5 languages", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.account_circle
         ),
         Profile(
             id = "janesmith",
@@ -34,7 +35,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I hate chocolate", false),
                 TwoTruthsOneLieEntity("I'm a marathon runner", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_woman
         ),
         Profile(
             id = "alicejohnson",
@@ -49,7 +50,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I'm allergic to cats", true),
                 TwoTruthsOneLieEntity("I once met a movie star", false)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_woman_profile
         ),
         Profile(
             id = "bobbrown",
@@ -64,7 +65,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I can't swim", false),
                 TwoTruthsOneLieEntity("I love spicy food", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.pac_man
         ),
         Profile(
             id = "evedavis",
@@ -79,7 +80,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I once lived in Japan", true),
                 TwoTruthsOneLieEntity("I can juggle", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_woman_profile
         ),
         Profile(
             id = "frankmiller",
@@ -94,7 +95,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I own a classic car", true),
                 TwoTruthsOneLieEntity("I once swam with dolphins", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_man_profile
         ),
         Profile(
             id = "gracewilson",
@@ -109,7 +110,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I dislike coffee", false),
                 TwoTruthsOneLieEntity("I have a black belt in karate", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.pac_man
         ),
         Profile(
             id = "henrymoore",
@@ -124,7 +125,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I love to bake", true),
                 TwoTruthsOneLieEntity("I have been on TV", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.account_circle
         ),
         Profile(
             id = "ivytaylor",
@@ -139,7 +140,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I dislike ice cream", false),
                 TwoTruthsOneLieEntity("I have bungee jumped", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_woman
         ),
         Profile(
             id = "jackanderson",
@@ -154,7 +155,7 @@ class ProfileRepository {
                 TwoTruthsOneLieEntity("I can play the piano", true),
                 TwoTruthsOneLieEntity("I have a tattoo", true)
             ),
-            avatarIcon = 0
+            avatarIcon = R.drawable.face_man
         )
     )
 
