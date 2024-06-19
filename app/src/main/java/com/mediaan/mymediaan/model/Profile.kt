@@ -17,7 +17,12 @@ data class Profile(
 )
 
 enum class Office {
-    HEERLEN, HASSELT, DUSSELDORF
+    HEERLEN, HASSELT, DUSSELDORF;
+
+    override fun toString(): String {
+        val nameLower = name.lowercase()
+        return nameLower.replaceFirstChar { it.uppercase() }
+    }
 }
 
 data class TwoTruthsOneLieEntity(

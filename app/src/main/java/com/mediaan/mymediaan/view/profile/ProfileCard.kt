@@ -1,13 +1,12 @@
 package com.mediaan.mymediaan.view.profile
 
-import android.content.res.Resources.Theme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -33,7 +32,7 @@ fun ProfileCard(
             .clickable(onClick = onClick)
     ) {
         Row(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).defaultMinSize(minHeight = 64.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
