@@ -1,8 +1,10 @@
 package com.mediaan.mymediaan.model
 
 import androidx.annotation.DrawableRes
+import java.util.UUID
 
 data class Profile(
+    val id: String = UUID.randomUUID().toString(),
     val firstName: String,
     val lastName: String,
     val age: Int,

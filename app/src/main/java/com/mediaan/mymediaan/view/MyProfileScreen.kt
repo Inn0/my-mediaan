@@ -21,7 +21,7 @@ fun MyProfileScreen(
         topBar = {
             MyMediaanAppBar(
                 drawerState = drawerState,
-                title = stringResource(MyMediaanScreen.MyProfile.title),
+                title = stringResource(MyMediaanScreen.Profile.title),
             )
         },
     ) { innerPadding ->

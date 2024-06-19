@@ -2,8 +2,10 @@ package com.mediaan.mymediaan.viewModel
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.lifecycle.ViewModel
@@ -16,7 +18,8 @@ import kotlinx.coroutines.flow.update
 
 enum class MyMediaanScreen(@StringRes val title: Int) {
     DiscoverColleague(title = R.string.discover_colleague),
-    MyProfile(title = R.string.my_profile)
+    Profile(title = R.string.profile),
+    AllColleagues(title = R.string.all_colleagues),
 }
 
 class MainNavigationViewModel : ViewModel() {
@@ -33,9 +36,15 @@ class MainNavigationViewModel : ViewModel() {
         DrawerItem(
             Icons.Filled.Person,
             Icons.Outlined.Person,
-            MyMediaanScreen.MyProfile.name,
-            MyMediaanScreen.MyProfile.name
-        )
+            MyMediaanScreen.Profile.name,
+            MyMediaanScreen.Profile.name
+        ),
+        DrawerItem(
+            Icons.Filled.List,
+            Icons.Outlined.List,
+            MyMediaanScreen.AllColleagues.name,
+            MyMediaanScreen.AllColleagues.name
+        ),
     )
 
     init {
