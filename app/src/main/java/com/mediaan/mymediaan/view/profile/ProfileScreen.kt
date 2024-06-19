@@ -1,4 +1,4 @@
-package com.mediaan.mymediaan.view
+package com.mediaan.mymediaan.view.profile
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.mediaan.mymediaan.repository.ProfileRepository
+import com.mediaan.mymediaan.view.MyMediaanAppBar
 
 @Composable
 fun ProfileScreen(
@@ -27,7 +28,6 @@ fun ProfileScreen(
             title = profileId ?: "Empty",
         )
     }){ padding ->
-        Log.d("profilescreen", profile.toString())
         profile?.let { actualProfile ->
             Column(modifier = Modifier.padding(padding)) {
                 Text(text = "First Name: ${actualProfile.firstName}")

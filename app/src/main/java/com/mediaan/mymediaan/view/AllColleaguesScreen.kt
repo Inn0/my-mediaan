@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mediaan.mymediaan.repository.ProfileRepository
+import com.mediaan.mymediaan.view.profile.ProfileCard
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 
 @Composable
@@ -32,13 +33,9 @@ fun AllColleaguesScreen(
     }){ padding ->
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(profiles) { profile ->
-                Text(
-                    text = profile.firstName,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable {
-                            navController.navigate("${MyMediaanScreen.Profile}/${profile.id}")
-                        }
+                ProfileCard(
+                    profile = profile,
+                    onClick = { navController.navigate("${MyMediaanScreen.Profile}/${profile.id}") }
                 )
             }
         }

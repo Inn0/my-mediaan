@@ -32,7 +32,7 @@ import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
-import com.mediaan.mymediaan.view.ProfileScreen
+import com.mediaan.mymediaan.view.profile.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 import kotlinx.coroutines.CoroutineScope
