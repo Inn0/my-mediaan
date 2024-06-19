@@ -3,9 +3,12 @@ package com.mediaan.mymediaan.view.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -34,6 +37,7 @@ fun ProfileScreen(
     val profile = remember(profileId) {
         profileId?.let { profileRepository.getProfileById(it) }
     }
+    val scrollState = rememberScrollState()
 
     Scaffold(topBar = {
         MyMediaanAppBar(
@@ -44,7 +48,10 @@ fun ProfileScreen(
         profile?.let {
             Column(modifier = Modifier
                 .padding(padding)
-                .padding(horizontal = 16.dp)) {
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
