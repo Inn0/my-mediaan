@@ -1,10 +1,5 @@
 package com.mediaan.mymediaan
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +32,6 @@ import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
-import com.mediaan.mymediaan.view.MyProfileScreen
 import com.mediaan.mymediaan.view.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -111,7 +105,7 @@ fun MainNavigation(
                 DiscoverColleagueScreen(drawerState)
             }
             composable(route = MyMediaanScreen.Profile.name) {
-                MyProfileScreen(drawerState)
+                ProfileScreen(drawerState, null)
             }
             composable(
                 route = "${MyMediaanScreen.Profile.name}/{profileId}",
