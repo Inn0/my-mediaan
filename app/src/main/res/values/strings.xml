@@ -2,6 +2,8 @@
     <string name="app_name">MyMediaan</string>
     <string name="discover_colleague">Discover colleague</string>
     <string name="profile">My profile</string>
+    <string name="profile_screen_title">Profile</string>
+    <string name="profile_screen_no_profile">No profile found</string>
     <string name="all_colleagues">All colleagues</string>
     <string name="back_button">Back</string>
 </resources>

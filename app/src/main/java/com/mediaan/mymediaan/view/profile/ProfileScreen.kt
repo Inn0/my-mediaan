@@ -20,8 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
@@ -42,7 +44,7 @@ fun ProfileScreen(
     Scaffold(topBar = {
         MyMediaanAppBar(
             drawerState = drawerState,
-            title = "Profile",
+            title = stringResource(id = R.string.profile_screen_title),
         )
     }){ padding ->
         profile?.let {
@@ -101,7 +103,7 @@ fun ProfileScreen(
                 }
             }
         } ?: run {
-            Text("No profile found")
+            Text(stringResource(id = R.string.profile_screen_no_profile))
         }
     }
 }
