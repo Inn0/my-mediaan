@@ -1,10 +1,5 @@
 package com.mediaan.mymediaan
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,17 +20,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
+import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
-import com.mediaan.mymediaan.view.MyProfileScreen
+import com.mediaan.mymediaan.view.profile.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 import kotlinx.coroutines.CoroutineScope
@@ -107,8 +104,18 @@ fun MainNavigation(
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
                 DiscoverColleagueScreen(drawerState)
             }
-            composable(route = MyMediaanScreen.MyProfile.name) {
-                MyProfileScreen(drawerState)
+            composable(route = MyMediaanScreen.Profile.name) {
+                ProfileScreen(drawerState, null)
+            }
+            composable(
+                route = "${MyMediaanScreen.Profile.name}/{profileId}",
+                arguments = listOf(navArgument("profileId") { type = NavType.StringType })
+            ) {
+                val profileId = it.arguments?.getString("profileId")
+                ProfileScreen(drawerState, profileId)
+            }
+            composable(route = MyMediaanScreen.AllColleagues.name) {
+                AllColleaguesScreen(drawerState, navController)
             }
         }
     }
