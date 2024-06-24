@@ -95,9 +95,12 @@ fun MainNavigation(
             }
         }
     ) {
+        val mainNavigationUiState by mainNavigationViewModel.uiState.collectAsState()
+        val startDestination = if (mainNavigationUiState.isOnboardingDone) MyMediaanScreen.DiscoverColleague.name else MyMediaanScreen.Ftu.name
+
         NavHost(
             navController = navController,
-            startDestination = MyMediaanScreen.Ftu.name, // TODO: add check isOnboardingDone
+            startDestination = startDestination,
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface),

@@ -59,4 +59,12 @@ class MainNavigationViewModel : ViewModel() {
             )
         }
     }
+
+    fun updateIsOnboardingDone() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isOnboardingDone = true
+            )
+        }
+    }
 }
