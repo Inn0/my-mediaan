@@ -12,6 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import kotlinx.coroutines.launch
@@ -20,23 +21,27 @@ import kotlinx.coroutines.launch
 @Composable
 fun MyMediaanAppBar(
     drawerState: DrawerState,
-    title: String
+    title: String,
+    navIcon: ImageVector? = Icons.Filled.Menu,
+    iconDescr: String? = "Menu",
+    onNavIconClick: (() -> Unit)? = null,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val onClick: () -> Unit = onNavIconClick ?: {
+        coroutineScope.launch {
+            drawerState.apply {
+                if (isClosed) open() else close()
+            }
+        }
+    }
 
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
-            IconButton(onClick = {
-                coroutineScope.launch {
-                    drawerState.apply {
-                        if (isClosed) open() else close()
-                    }
-                }
-            }) {
+            IconButton(onClick = onClick) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menu"
+                    imageVector = navIcon ?: Icons.Filled.Menu,
+                    contentDescription = iconDescr
                 )
             }
         }
@@ -49,7 +54,8 @@ fun MyMediaanAppBarPreview() {
     MyMediaanTheme {
         MyMediaanAppBar(
             drawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-            title = "Title"
+            title = "Title",
+            navIcon = Icons.Filled.Menu,
         )
     }
 }

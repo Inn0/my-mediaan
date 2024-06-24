@@ -33,6 +33,7 @@ import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
 import com.mediaan.mymediaan.view.FtuScreen
+import com.mediaan.mymediaan.view.profile.CreateProfileScreen
 import com.mediaan.mymediaan.view.profile.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -106,7 +107,10 @@ fun MainNavigation(
                 .background(MaterialTheme.colorScheme.surface),
         ) {
             composable(route = MyMediaanScreen.Ftu.name) {
-                FtuScreen()
+                FtuScreen(navController)
+            }
+            composable(route = MyMediaanScreen.CreateProfile.name) {
+                CreateProfileScreen(navController, mainNavigationViewModel)
             }
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
                 DiscoverColleagueScreen(drawerState)

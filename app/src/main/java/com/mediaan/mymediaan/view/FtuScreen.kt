@@ -21,13 +21,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.ui.theme.Typography
+import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 
 @Composable
-fun FtuScreen() {
+fun FtuScreen(navController: NavHostController) {
     val scrollState = rememberScrollState()
 
     Scaffold { innerPadding ->
@@ -65,7 +68,7 @@ fun FtuScreen() {
                 textAlign = TextAlign.Center,
             )
             Button(
-                onClick = { /*TODO: navigate to something like profile screen to fill in data; should have "Back" button*/ },
+                onClick = { navController.navigate(MyMediaanScreen.CreateProfile.name) },
                 colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
                 modifier = Modifier
                     .padding(top = 56.dp)
@@ -82,6 +85,6 @@ fun FtuScreen() {
 @Composable
 fun FtuScreenPreview() {
     MyMediaanTheme {
-        FtuScreen()
+        FtuScreen(navController = rememberNavController())
     }
 }

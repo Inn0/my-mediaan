@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MyMediaan</string>
+    <string name="ftu">Intro</string>
+    <string name="create_profile">Create profile</string>
     <string name="discover_colleague">Discover colleague</string>
     <string name="profile">My profile</string>
     <string name="profile_screen_title">Profile</string>
