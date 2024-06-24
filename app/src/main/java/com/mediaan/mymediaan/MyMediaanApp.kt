@@ -102,7 +102,7 @@ fun MainNavigation(
                 .background(MaterialTheme.colorScheme.surface),
         ) {
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
-                DiscoverColleagueScreen(drawerState)
+                DiscoverColleagueScreen(drawerState, navController)
             }
             composable(route = MyMediaanScreen.Profile.name) {
                 ProfileScreen(drawerState, null)
