@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 enum class MyMediaanScreen(@StringRes val title: Int) {
+    Ftu(0),
     DiscoverColleague(title = R.string.discover_colleague),
     Profile(title = R.string.profile),
     AllColleagues(title = R.string.all_colleagues),

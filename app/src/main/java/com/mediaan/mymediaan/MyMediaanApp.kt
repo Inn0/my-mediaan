@@ -32,6 +32,7 @@ import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
+import com.mediaan.mymediaan.view.FtuScreen
 import com.mediaan.mymediaan.view.profile.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -96,11 +97,14 @@ fun MainNavigation(
     ) {
         NavHost(
             navController = navController,
-            startDestination = MyMediaanScreen.DiscoverColleague.name,
+            startDestination = MyMediaanScreen.Ftu.name, // TODO: add check isOnboardingDone
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface),
         ) {
+            composable(route = MyMediaanScreen.Ftu.name) {
+                FtuScreen()
+            }
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
                 DiscoverColleagueScreen(drawerState)
             }
