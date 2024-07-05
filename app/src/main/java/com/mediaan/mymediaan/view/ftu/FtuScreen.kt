@@ -1,4 +1,4 @@
-package com.mediaan.mymediaan.view
+package com.mediaan.mymediaan.view.ftu
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
