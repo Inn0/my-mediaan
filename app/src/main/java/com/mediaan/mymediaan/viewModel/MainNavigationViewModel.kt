@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.lifecycle.ViewModel
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.DrawerItem
+import com.mediaan.mymediaan.model.Office
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,6 +49,8 @@ class MainNavigationViewModel : ViewModel() {
             MyMediaanScreen.AllColleagues.name
         ),
     )
+
+    val offices: List<String> = Office.entries.map { it.toString() }
 
     init {
        _uiState.value = MainNavigationUiState(currentSelectedItemIndex = 0)

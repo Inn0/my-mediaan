@@ -2,6 +2,7 @@ package com.mediaan.mymediaan.view.ftu
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,11 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mediaan.mymediaan.model.Office
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
+import com.mediaan.mymediaan.ui.theme.Typography
 import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -53,13 +56,19 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
     ) { innerPadding ->
         val scrollState = rememberScrollState()
         var fullName by remember { mutableStateOf("") }
+        val minCharName = 3
+        val maxCharName = 100
         var age by remember { mutableStateOf("") }
-        val offices: List<String> = Office.entries.map { it.toString() } // TODO: make accessible from ViewModel
+        val minAge = 18
+        val maxAge = 122
         var isExpanded by remember { mutableStateOf(false) }
-        var selectedOffice by remember { mutableStateOf(offices[0]) }
+        var selectedOffice by remember { mutableStateOf(viewModel.offices[0]) }
         var firstTruth by remember { mutableStateOf("") }
         var secondTruth by remember { mutableStateOf("") }
         var lie by remember { mutableStateOf("") }
+        val minCharFacts = 10
+        val maxCharFacts = 280
+        var isProfileValid by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -70,15 +79,26 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
         ) {
             Text(
                 text = "Basic information",
+                style = Typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            // TODO: validate min 3 char, max 100 char
             OutlinedTextField(
                 value = fullName,
-                onValueChange = { fullName = it },
+                onValueChange = {
+                    if (it.length <= maxCharName) fullName = it
+                },
                 label = { Text("Full name") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharName char., ${fullName.length} / $maxCharName",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = fullName.isNotEmpty() && fullName.length < minCharName
             )
-            // TODO: validate 18-99
             OutlinedTextField(
                 value = age,
                 onValueChange = { age = it },
@@ -86,26 +106,40 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
                     keyboardType = KeyboardType.Number
                 ),
                 label = { Text("Age") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minAge y/o",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = age.isNotEmpty() && (age.toIntOrNull()?.let { it < minAge || it > maxAge } ?: true)
             )
             ExposedDropdownMenuBox(
                 expanded = isExpanded,
                 onExpandedChange = {
                     isExpanded = !isExpanded
                 },
-                modifier = Modifier.padding(vertical = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
             ) {
                 TextField(
                     value = selectedOffice,
                     onValueChange = {},
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                 )
                 ExposedDropdownMenu(
                     expanded = isExpanded,
-                    onDismissRequest = { isExpanded = false }
+                    onDismissRequest = { isExpanded = false },
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
-                    offices.forEach { item ->
+                    viewModel.offices.forEach { item ->
                         DropdownMenuItem(
                             text = { Text(text = item) },
                             onClick = {
@@ -121,36 +155,81 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
                 text = "Interesting facts about you",
                 modifier = Modifier
                     .padding(top = 24.dp)
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 16.dp),
+                style = Typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
             )
-            // TODO: validate max 280 char
             OutlinedTextField(
                 value = firstTruth,
-                onValueChange = { firstTruth = it },
-                label = { Text("First truth (max 280 char.)") },
+                onValueChange = {
+                    if (it.length <= maxCharFacts) firstTruth = it
+                },
+                label = { Text("First truth") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharFacts char., ${firstTruth.length} / $maxCharFacts",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = firstTruth.isNotEmpty() && firstTruth.length < minCharFacts,
             )
-            // TODO: validate max 280 char
             OutlinedTextField(
                 value = secondTruth,
-                onValueChange = { secondTruth = it },
-                label = { Text("Second truth (max 280 char.)") },
+                onValueChange = {
+                    if (it.length <= maxCharFacts) secondTruth = it
+                },
+                label = { Text("Second truth") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharFacts char., ${secondTruth.length} / $maxCharFacts",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = secondTruth.isNotEmpty() && secondTruth.length < minCharFacts,
             )
-            // TODO: validate max 280 char
             OutlinedTextField(
                 value = lie,
                 onValueChange = { lie = it },
-                label = { Text("Nice little lie (max 280 char.)") },
+                label = { Text("Nice little lie") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharFacts char., ${lie.length} / $maxCharFacts",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = lie.isNotEmpty() && lie.length < minCharFacts,
             )
 
             Button(
                 onClick = {
+                    /* TODO: check is form fields are not empty
+                    A. if empty show alert, smth like
+
+                    if (!isProfileValid) {
+                        Text(
+                            text= "Please fill in all fields",
+                            color = Color.Red,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                    }
+
+                    B. if not empty, navigate, save data and set onboarding to done
+                     */
+
                     navController.navigate(MyMediaanScreen.DiscoverColleague.name)
                     viewModel.updateIsOnboardingDone()
                     // TODO: set input values to new profile in profile repository (via ViewModel)
                     // TODO: save created account on root level
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
-                modifier = Modifier.padding(top = 24.dp)
+                modifier = Modifier
+                    .padding(vertical = 24.dp)
             ) {
                 Text("Ready!")
             }
