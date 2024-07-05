@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,21 +55,33 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
             )
         },
     ) { innerPadding ->
+        // TODO: move logic to ftuViewModel
         val scrollState = rememberScrollState()
-        var fullName by remember { mutableStateOf("") }
+        var firstName by remember { mutableStateOf("") }
+        var nickName by remember { mutableStateOf("") }
+        var lastName by remember { mutableStateOf("") }
         val minCharName = 3
-        val maxCharName = 100
+        val maxCharName = 50
         var age by remember { mutableStateOf("") }
         val minAge = 18
         val maxAge = 122
-        var isExpanded by remember { mutableStateOf(false) }
         var selectedOffice by remember { mutableStateOf(viewModel.offices[0]) }
+        var isExpanded by remember { mutableStateOf(false) }
         var firstTruth by remember { mutableStateOf("") }
         var secondTruth by remember { mutableStateOf("") }
         var lie by remember { mutableStateOf("") }
         val minCharFacts = 10
         val maxCharFacts = 280
-        var isProfileValid by remember { mutableStateOf(false) }
+        val isProfileValid = remember {
+            derivedStateOf {
+                firstName.isNotEmpty() &&
+                        lastName.isNotEmpty() &&
+                        age.isNotEmpty() &&
+                        firstTruth.isNotEmpty() &&
+                        secondTruth.isNotEmpty() &&
+                        lie.isNotEmpty()
+            }
+        }.value
 
         Column(
             modifier = Modifier
@@ -84,20 +97,51 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             OutlinedTextField(
-                value = fullName,
+                value = firstName,
                 onValueChange = {
-                    if (it.length <= maxCharName) fullName = it
+                    if (it.length <= maxCharName) firstName = it
                 },
-                label = { Text("Full name") },
+                label = { Text("First name") },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharName char., ${fullName.length} / $maxCharName",
+                        text = "min $minCharName char., ${firstName.length} / $maxCharName",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = fullName.isNotEmpty() && fullName.length < minCharName
+                isError = firstName.isNotEmpty() && firstName.length < minCharName
+            )
+            OutlinedTextField(
+                value = nickName,
+                onValueChange = {
+                    if (it.length <= maxCharName) nickName = it
+                },
+                label = { Text("Nickname (optional)") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharName char., ${nickName.length} / $maxCharName",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+            )
+            OutlinedTextField(
+                value = lastName,
+                onValueChange = {
+                    if (it.length <= maxCharName) lastName = it
+                },
+                label = { Text("Last name") },
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    Text(
+                        text = "min $minCharName char., ${lastName.length} / $maxCharName",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                    )
+                },
+                isError = lastName.isNotEmpty() && lastName.length < minCharName
             )
             OutlinedTextField(
                 value = age,
@@ -207,31 +251,20 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
             )
 
             Button(
+                enabled = isProfileValid,
                 onClick = {
-                    /* TODO: check is form fields are not empty
-                    A. if empty show alert, smth like
-
-                    if (!isProfileValid) {
-                        Text(
-                            text= "Please fill in all fields",
-                            color = Color.Red,
-                            modifier = Modifier.padding(top = 16.dp)
-                        )
-                    }
-
-                    B. if not empty, navigate, save data and set onboarding to done
-                     */
-
                     navController.navigate(MyMediaanScreen.DiscoverColleague.name)
-                    viewModel.updateIsOnboardingDone()
-                    // TODO: set input values to new profile in profile repository (via ViewModel)
+                    // TODO: create new profile with input values
+                    // TODO: add new profile to profile repository
                     // TODO: save created account on root level
+                    viewModel.updateIsOnboardingDone()
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
                 modifier = Modifier
                     .padding(vertical = 24.dp)
             ) {
-                Text("Ready!")
+                Text(
+                    text = if (isProfileValid) "Ready!" else "Fill in all fields")
             }
         }
     }
