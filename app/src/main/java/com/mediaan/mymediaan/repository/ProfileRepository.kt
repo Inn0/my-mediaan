@@ -1,9 +1,13 @@
 package com.mediaan.mymediaan.repository
 
+import android.util.Log
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.Office
 import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
+import kotlinx.coroutines.tasks.await
 
 class ProfileRepository {
     private val profiles = listOf(
@@ -319,12 +323,21 @@ class ProfileRepository {
             avatarIcon = R.drawable.face_man
         ),
     )
+    private val databaseIdentifier = "profiles"
+    private val db = Firebase.firestore
 
-    fun getAllProfiles(): List<Profile> {
-        return profiles
+    suspend fun getAllProfiles(): List<Profile> {
+        return try {
+            val result = db.collection(databaseIdentifier).get().await()
+            result.toObjects(Profile::class.java)
+        } catch (exception: Exception) {
+            Log.w(this.javaClass.simpleName, "Error getting documents:", exception)
+            profiles
+        }
     }
 
-    fun getProfileById(id: String): Profile {
+    suspend fun getProfileById(id: String): Profile {
+        val profiles = getAllProfiles()
         return profiles.first { it.id == id }
     }
 }

@@ -14,7 +14,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Green
@@ -24,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mediaan.mymediaan.R
+import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
@@ -36,8 +41,10 @@ fun ProfileScreen(
     profileId: String?,
     profileRepository: ProfileRepository = ProfileRepository()
 ){
-    val profile = remember(profileId) {
-        profileId?.let { profileRepository.getProfileById(it) }
+    var profile by remember { mutableStateOf<Profile?>(null) }
+
+    LaunchedEffect(profileId) {
+        profile = profileId?.let { profileRepository.getProfileById(it) }
     }
     val scrollState = rememberScrollState()
 

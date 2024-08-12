@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092738894490",
+    "project_id": "mymediaan",
+    "storage_bucket": "mymediaan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092738894490:android:f6b5c21a6a7d5c271dad23",
+        "android_client_info": {
+          "package_name": "com.mediaan.mymediaan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3aXSAo8l996eW9go-O-7RjS1JTzQorZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
