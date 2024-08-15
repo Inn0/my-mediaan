@@ -8,4 +8,20 @@
     <string name="profile_screen_no_profile">No profile found</string>
     <string name="all_colleagues">All colleagues</string>
     <string name="back_button">Back</string>
+
+    <string name="ftu_screen_heading">Your way to connect with Mediaan</string>
+    <string name="ftu_screen_subheading">Find matching colleagues in a gamified way</string>
+    <string name="ftu_screen_start_button">Get started</string>
+
+    <string name="create_profile_screen_heading_section1">Basic information</string>
+    <string name="create_profile_screen_first_name_label">First name</string>
+    <string name="create_profile_screen_nickname_label">Nickname (optional)</string>
+    <string name="create_profile_screen_last_name_label">Last name</string>
+    <string name="create_profile_screen_age_label">Age</string>
+    <string name="create_profile_screen_heading_section2">Interesting facts about you</string>
+    <string name="create_profile_screen_truth1_label">First truth</string>
+    <string name="create_profile_screen_truth2_label">Second truth</string>
+    <string name="create_profile_screen_lie_label">Nice little lie</string>
+    <string name="create_profile_screen_ready_button_enabled">Ready!</string>
+    <string name="create_profile_screen_ready_button_disabled">Fill in all fields</string>
 </resources>

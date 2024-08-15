@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
@@ -42,7 +43,6 @@ import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 
-// TODO: move texts to string file
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateProfileScreen(
@@ -97,7 +97,7 @@ fun CreateProfileScreen(
                 .fillMaxSize(),
         ) {
             Text(
-                text = "Basic information",
+                text = stringResource(id = R.string.create_profile_screen_heading_section1),
                 style = Typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -107,7 +107,7 @@ fun CreateProfileScreen(
                 onValueChange = {
                     if (it.length <= maxCharName) firstName = it
                 },
-                label = { Text("First name") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_first_name_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -123,7 +123,7 @@ fun CreateProfileScreen(
                 onValueChange = {
                     if (it.length <= maxCharName) nickName = it
                 },
-                label = { Text("Nickname (optional)") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_nickname_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -138,7 +138,7 @@ fun CreateProfileScreen(
                 onValueChange = {
                     if (it.length <= maxCharName) lastName = it
                 },
-                label = { Text("Last name") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_last_name_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -155,7 +155,7 @@ fun CreateProfileScreen(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 ),
-                label = { Text("Age") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_age_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -202,7 +202,7 @@ fun CreateProfileScreen(
             }
 
             Text(
-                text = "Interesting facts about you",
+                text = stringResource(id = R.string.create_profile_screen_heading_section2),
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .padding(bottom = 16.dp),
@@ -214,7 +214,7 @@ fun CreateProfileScreen(
                 onValueChange = {
                     if (it.length <= maxCharFacts) firstTruth = it
                 },
-                label = { Text("First truth") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_truth1_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -230,7 +230,7 @@ fun CreateProfileScreen(
                 onValueChange = {
                     if (it.length <= maxCharFacts) secondTruth = it
                 },
-                label = { Text("Second truth") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_truth2_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -244,7 +244,7 @@ fun CreateProfileScreen(
             OutlinedTextField(
                 value = lie,
                 onValueChange = { lie = it },
-                label = { Text("Nice little lie") },
+                label = { Text(stringResource(id = R.string.create_profile_screen_lie_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
@@ -281,7 +281,10 @@ fun CreateProfileScreen(
                     .padding(vertical = 24.dp)
             ) {
                 Text(
-                    text = if (isProfileValid) "Ready!" else "Fill in all fields")
+                    text = if (isProfileValid) stringResource(id = R.string.create_profile_screen_ready_button_enabled) else stringResource(
+                        id = R.string.create_profile_screen_ready_button_disabled
+                    )
+                )
             }
         }
     }

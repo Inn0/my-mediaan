@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,14 +56,14 @@ fun FtuScreen(navController: NavHostController) {
                 tint = MediaanPrimary,
             )
             Text(
-                text = "Your way to connect with Mediaan",
+                text = stringResource(id = R.string.ftu_screen_heading),
                 style = Typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 56.dp),
                 textAlign = TextAlign.Center,
             )
             Text(
-                text = "Find matching colleagues in a gamified way",
+                text = stringResource(id = R.string.ftu_screen_subheading),
                 style = Typography.bodyMedium,
                 modifier = Modifier.padding(top = 24.dp),
                 textAlign = TextAlign.Center,
@@ -74,7 +75,7 @@ fun FtuScreen(navController: NavHostController) {
                     .padding(top = 56.dp)
                     .padding(bottom = 24.dp)
             ) {
-                Text("Get started")
+                Text(stringResource(id = R.string.ftu_screen_start_button))
             }
         }
         }
