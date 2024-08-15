@@ -273,7 +273,6 @@ fun CreateProfileScreen(
                         ),
                     )
                     profileRepository.addProfile(newProfile)
-                    // TODO: show this profile in MyProfile screen
                     viewModel.updateIsOnboardingDone()
                     navController.navigate(MyMediaanScreen.DiscoverColleague.name)
                 },

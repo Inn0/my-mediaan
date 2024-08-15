@@ -119,7 +119,7 @@ fun MainNavigation(
                 DiscoverColleagueScreen(drawerState)
             }
             composable(route = MyMediaanScreen.Profile.name) {
-                ProfileScreen(drawerState, null, profileRepository)
+                ProfileScreen(drawerState, "me", profileRepository)
             }
             composable(
                 route = "${MyMediaanScreen.Profile.name}/{profileId}",
