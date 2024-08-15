@@ -29,11 +29,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mediaan.mymediaan.model.DrawerItem
+import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
-import com.mediaan.mymediaan.view.ftu.FtuScreen
 import com.mediaan.mymediaan.view.ftu.CreateProfileScreen
+import com.mediaan.mymediaan.view.ftu.FtuScreen
 import com.mediaan.mymediaan.view.profile.ProfileScreen
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -78,7 +79,8 @@ fun MainNavigation(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    mainNavigationViewModel: MainNavigationViewModel = viewModel()
+    mainNavigationViewModel: MainNavigationViewModel = viewModel(),
+    profileRepository: ProfileRepository = ProfileRepository(),
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -96,6 +98,7 @@ fun MainNavigation(
             }
         }
     ) {
+        // TODO: implement solution that will persist bool state after app kill and reopen
         val mainNavigationUiState by mainNavigationViewModel.uiState.collectAsState()
         val startDestination = if (mainNavigationUiState.isOnboardingDone) MyMediaanScreen.DiscoverColleague.name else MyMediaanScreen.Ftu.name
 
@@ -110,23 +113,23 @@ fun MainNavigation(
                 FtuScreen(navController)
             }
             composable(route = MyMediaanScreen.CreateProfile.name) {
-                CreateProfileScreen(navController, mainNavigationViewModel)
+                CreateProfileScreen(navController, mainNavigationViewModel, profileRepository)
             }
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
                 DiscoverColleagueScreen(drawerState)
             }
             composable(route = MyMediaanScreen.Profile.name) {
-                ProfileScreen(drawerState, null)
+                ProfileScreen(drawerState, null, profileRepository)
             }
             composable(
                 route = "${MyMediaanScreen.Profile.name}/{profileId}",
                 arguments = listOf(navArgument("profileId") { type = NavType.StringType })
             ) {
                 val profileId = it.arguments?.getString("profileId")
-                ProfileScreen(drawerState, profileId)
+                ProfileScreen(drawerState, profileId, profileRepository)
             }
             composable(route = MyMediaanScreen.AllColleagues.name) {
-                AllColleaguesScreen(drawerState, navController)
+                AllColleaguesScreen(drawerState, navController, profileRepository)
             }
         }
     }

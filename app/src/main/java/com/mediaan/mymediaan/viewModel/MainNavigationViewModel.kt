@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModel
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.model.Office
+import com.mediaan.mymediaan.model.Profile
+import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,7 +52,7 @@ class MainNavigationViewModel : ViewModel() {
         ),
     )
 
-    val offices: List<String> = Office.entries.map { it.toString() }
+    val offices: List<Office> = Office.entries
 
     init {
        _uiState.value = MainNavigationUiState(currentSelectedItemIndex = 0)
@@ -70,5 +72,29 @@ class MainNavigationViewModel : ViewModel() {
                 isOnboardingDone = true
             )
         }
+    }
+
+    fun createNewProfile(
+        id: String,
+        firstName: String,
+        lastName: String,
+        age: Int,
+        nickName: String,
+        office: Office,
+        interests: List<String> = emptyList(),
+        twoTruthsOneLie: List<TwoTruthsOneLieEntity>,
+        avatarIcon: Int = R.drawable.account_circle,
+    ): Profile {
+        return Profile(
+            id = id,
+            firstName = firstName,
+            lastName = lastName,
+            age = age,
+            nickName = nickName,
+            office = office,
+            interests = interests,
+            twoTruthsOneLie = twoTruthsOneLie,
+            avatarIcon = avatarIcon
+        )
     }
 }

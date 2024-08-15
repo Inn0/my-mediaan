@@ -34,7 +34,7 @@ import com.mediaan.mymediaan.view.MyMediaanAppBar
 fun ProfileScreen(
     drawerState: DrawerState,
     profileId: String?,
-    profileRepository: ProfileRepository = ProfileRepository()
+    profileRepository: ProfileRepository
 ){
     val profile = remember(profileId) {
         profileId?.let { profileRepository.getProfileById(it) }

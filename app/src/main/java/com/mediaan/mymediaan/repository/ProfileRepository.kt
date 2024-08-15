@@ -6,7 +6,7 @@ import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 
 class ProfileRepository {
-    private val profiles = listOf(
+    private val _profiles = mutableListOf(
         Profile(
             id = "johndoe",
             firstName = "John",
@@ -320,11 +320,21 @@ class ProfileRepository {
         ),
     )
 
+    private val profiles: List<Profile>
+        get() {
+            return _profiles
+        }
+
+    fun addProfile(profile: Profile) {
+        _profiles.add(profile)
+    }
+
     fun getAllProfiles(): List<Profile> {
         return profiles
     }
 
     fun getProfileById(id: String): Profile {
+        // TODO: implement default behavior if no profile with provided id
         return profiles.first { it.id == id }
     }
 }

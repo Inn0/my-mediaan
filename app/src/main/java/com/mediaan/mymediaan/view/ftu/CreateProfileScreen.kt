@@ -34,6 +34,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
+import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
 import com.mediaan.mymediaan.ui.theme.Typography
 import com.mediaan.mymediaan.view.MyMediaanAppBar
@@ -43,7 +45,11 @@ import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 // TODO: move texts to string file
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationViewModel) {
+fun CreateProfileScreen(
+    navController: NavController,
+    viewModel: MainNavigationViewModel,
+    profileRepository: ProfileRepository,
+) {
     Scaffold(
         topBar = {
             MyMediaanAppBar(
@@ -55,7 +61,7 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
             )
         },
     ) { innerPadding ->
-        // TODO: move logic to ftuViewModel
+        // TODO: should we this move logic to new view model - ftuViewModel?
         val scrollState = rememberScrollState()
         var firstName by remember { mutableStateOf("") }
         var nickName by remember { mutableStateOf("") }
@@ -170,7 +176,7 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
                     .padding(vertical = 8.dp),
             ) {
                 TextField(
-                    value = selectedOffice,
+                    value = selectedOffice.toString(),
                     onValueChange = {},
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
@@ -185,7 +191,7 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
                 ) {
                     viewModel.offices.forEach { item ->
                         DropdownMenuItem(
-                            text = { Text(text = item) },
+                            text = { Text(text = item.toString()) },
                             onClick = {
                                 selectedOffice = item
                                 isExpanded = false
@@ -253,11 +259,23 @@ fun CreateProfileScreen(navController: NavController, viewModel: MainNavigationV
             Button(
                 enabled = isProfileValid,
                 onClick = {
-                    navController.navigate(MyMediaanScreen.DiscoverColleague.name)
-                    // TODO: create new profile with input values
-                    // TODO: add new profile to profile repository
-                    // TODO: save created account on root level
+                    val newProfile = viewModel.createNewProfile(
+                        id = "me",
+                        firstName = firstName,
+                        lastName = lastName,
+                        age = age.toIntOrNull() ?: 0,
+                        nickName = nickName,
+                        office = selectedOffice,
+                        twoTruthsOneLie = listOf(
+                            TwoTruthsOneLieEntity(firstTruth, true),
+                            TwoTruthsOneLieEntity(secondTruth, true),
+                            TwoTruthsOneLieEntity(lie, false)
+                        ),
+                    )
+                    profileRepository.addProfile(newProfile)
+                    // TODO: show this profile in MyProfile screen
                     viewModel.updateIsOnboardingDone()
+                    navController.navigate(MyMediaanScreen.DiscoverColleague.name)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
                 modifier = Modifier

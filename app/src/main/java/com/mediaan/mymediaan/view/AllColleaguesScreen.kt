@@ -18,7 +18,7 @@ import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 fun AllColleaguesScreen(
     drawerState: DrawerState,
     navController: NavController,
-    profileRepository: ProfileRepository = ProfileRepository(),
+    profileRepository: ProfileRepository,
 ) {
     val profiles = remember { profileRepository.getAllProfiles() }
 
