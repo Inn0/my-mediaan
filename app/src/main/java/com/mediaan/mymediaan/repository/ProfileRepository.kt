@@ -334,7 +334,6 @@ class ProfileRepository {
     }
 
     fun getProfileById(id: String): Profile {
-        // TODO: implement default behavior if no profile with provided id
         return profiles.first { it.id == id }
     }
 }

@@ -32,12 +32,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
+import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.ui.theme.Typography
 import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
@@ -61,7 +64,6 @@ fun CreateProfileScreen(
             )
         },
     ) { innerPadding ->
-        // TODO: should we this move logic to new view model - ftuViewModel?
         val scrollState = rememberScrollState()
         var firstName by remember { mutableStateOf("") }
         var nickName by remember { mutableStateOf("") }
@@ -287,5 +289,17 @@ fun CreateProfileScreen(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun CreateProfileScreenPreview() {
+    MyMediaanTheme {
+        CreateProfileScreen(
+            navController = rememberNavController(),
+            viewModel = MainNavigationViewModel(),
+            profileRepository = ProfileRepository()
+        )
     }
 }

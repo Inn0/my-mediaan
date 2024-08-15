@@ -98,7 +98,6 @@ fun MainNavigation(
             }
         }
     ) {
-        // TODO: implement solution that will persist bool state after app kill and reopen
         val mainNavigationUiState by mainNavigationViewModel.uiState.collectAsState()
         val startDestination = if (mainNavigationUiState.isOnboardingDone) MyMediaanScreen.DiscoverColleague.name else MyMediaanScreen.Ftu.name
 
