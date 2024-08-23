@@ -41,43 +41,43 @@ fun FtuScreen(navController: NavHostController) {
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .verticalScroll(scrollState)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.handshake_outline),
-                contentDescription = "FTU icon",
+            Column(
                 modifier = Modifier
-                    .size(120.dp),
-                tint = MediaanPrimary,
-            )
-            Text(
-                text = stringResource(id = R.string.ftu_screen_heading),
-                style = Typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 56.dp),
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                text = stringResource(id = R.string.ftu_screen_subheading),
-                style = Typography.bodyMedium,
-                modifier = Modifier.padding(top = 24.dp),
-                textAlign = TextAlign.Center,
-            )
-            Button(
-                onClick = { navController.navigate(MyMediaanScreen.CreateProfile.name) },
-                colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
-                modifier = Modifier
-                    .padding(top = 56.dp)
-                    .padding(bottom = 24.dp)
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(scrollState)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(stringResource(id = R.string.ftu_screen_start_button))
+                Icon(
+                    painter = painterResource(id = R.drawable.handshake_outline),
+                    contentDescription = "FTU icon",
+                    modifier = Modifier
+                        .size(120.dp),
+                    tint = MediaanPrimary,
+                )
+                Text(
+                    text = stringResource(id = R.string.ftu_screen_heading),
+                    style = Typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(top = 56.dp),
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = stringResource(id = R.string.ftu_screen_subheading),
+                    style = Typography.bodyMedium,
+                    modifier = Modifier.padding(top = 24.dp),
+                    textAlign = TextAlign.Center,
+                )
+                Button(
+                    onClick = { navController.navigate(MyMediaanScreen.CreateProfile.name) },
+                    colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
+                    modifier = Modifier
+                        .padding(top = 56.dp)
+                        .padding(bottom = 24.dp)
+                ) {
+                    Text(stringResource(id = R.string.ftu_screen_start_button))
+                }
             }
-        }
         }
     }
 }
