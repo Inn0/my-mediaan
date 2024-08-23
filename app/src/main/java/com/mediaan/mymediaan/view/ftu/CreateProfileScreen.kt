@@ -22,7 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +45,7 @@ import com.mediaan.mymediaan.ui.theme.Typography
 import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
+import com.mediaan.mymediaan.viewModel.ftu.FtuViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +54,9 @@ fun CreateProfileScreen(
     viewModel: MainNavigationViewModel,
     profileRepository: ProfileRepository,
 ) {
+    val ftuViewModel = FtuViewModel(offices = viewModel.offices)
+    val ftuUiState by ftuViewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             MyMediaanAppBar(
@@ -65,31 +69,7 @@ fun CreateProfileScreen(
         },
     ) { innerPadding ->
         val scrollState = rememberScrollState()
-        var firstName by remember { mutableStateOf("") }
-        var nickName by remember { mutableStateOf("") }
-        var lastName by remember { mutableStateOf("") }
-        val minCharName = 3
-        val maxCharName = 50
-        var age by remember { mutableStateOf("") }
-        val minAge = 18
-        val maxAge = 122
-        var selectedOffice by remember { mutableStateOf(viewModel.offices[0]) }
         var isExpanded by remember { mutableStateOf(false) }
-        var firstTruth by remember { mutableStateOf("") }
-        var secondTruth by remember { mutableStateOf("") }
-        var lie by remember { mutableStateOf("") }
-        val minCharFacts = 10
-        val maxCharFacts = 280
-        val isProfileValid = remember {
-            derivedStateOf {
-                firstName.isNotEmpty() &&
-                        lastName.isNotEmpty() &&
-                        age.isNotEmpty() &&
-                        firstTruth.isNotEmpty() &&
-                        secondTruth.isNotEmpty() &&
-                        lie.isNotEmpty()
-            }
-        }.value
 
         Column(
             modifier = Modifier
@@ -105,55 +85,55 @@ fun CreateProfileScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             OutlinedTextField(
-                value = firstName,
+                value = ftuUiState.firstName,
                 onValueChange = {
-                    if (it.length <= maxCharName) firstName = it
+                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateFirstName(it)
                 },
                 label = { Text(stringResource(id = R.string.create_profile_screen_first_name_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharName char., ${firstName.length} / $maxCharName",
+                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.firstName.length} / ${ftuViewModel.maxCharName}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = firstName.isNotEmpty() && firstName.length < minCharName
+                isError = ftuUiState.firstName.isNotEmpty() && ftuUiState.firstName.length < ftuViewModel.minCharName
             )
             OutlinedTextField(
-                value = nickName,
+                value = ftuUiState.nickName,
                 onValueChange = {
-                    if (it.length <= maxCharName) nickName = it
+                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateNickName(it)
                 },
                 label = { Text(stringResource(id = R.string.create_profile_screen_nickname_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharName char., ${nickName.length} / $maxCharName",
+                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.nickName.length} / ${ftuViewModel.maxCharName}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
             )
             OutlinedTextField(
-                value = lastName,
+                value = ftuUiState.lastName,
                 onValueChange = {
-                    if (it.length <= maxCharName) lastName = it
+                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateLastName(it)
                 },
                 label = { Text(stringResource(id = R.string.create_profile_screen_last_name_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharName char., ${lastName.length} / $maxCharName",
+                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.lastName.length} / ${ftuViewModel.maxCharName}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = lastName.isNotEmpty() && lastName.length < minCharName
+                isError = ftuUiState.lastName.isNotEmpty() && ftuUiState.lastName.length < ftuViewModel.minCharName
             )
             OutlinedTextField(
-                value = age,
-                onValueChange = { age = it },
+                value = ftuUiState.age,
+                onValueChange = { ftuViewModel.updateAge(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 ),
@@ -161,12 +141,12 @@ fun CreateProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minAge y/o",
+                        text = "min ${ftuViewModel.minAge} y/o",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = age.isNotEmpty() && (age.toIntOrNull()?.let { it < minAge || it > maxAge } ?: true)
+                isError = ftuUiState.age.isNotEmpty() && (ftuUiState.age.toIntOrNull()?.let { it < ftuViewModel.minAge || it > ftuViewModel.maxAge } ?: true)
             )
             ExposedDropdownMenuBox(
                 expanded = isExpanded,
@@ -178,7 +158,7 @@ fun CreateProfileScreen(
                     .padding(vertical = 8.dp),
             ) {
                 TextField(
-                    value = selectedOffice.toString(),
+                    value = ftuUiState.selectedOffice.toString(),
                     onValueChange = {},
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
@@ -195,7 +175,7 @@ fun CreateProfileScreen(
                         DropdownMenuItem(
                             text = { Text(text = item.toString()) },
                             onClick = {
-                                selectedOffice = item
+                                ftuViewModel.updateSelectedOffice(item)
                                 isExpanded = false
                             }
                         )
@@ -212,66 +192,68 @@ fun CreateProfileScreen(
                 fontWeight = FontWeight.SemiBold,
             )
             OutlinedTextField(
-                value = firstTruth,
+                value = ftuUiState.firstTruth,
                 onValueChange = {
-                    if (it.length <= maxCharFacts) firstTruth = it
+                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateFirstTruth(it)
                 },
                 label = { Text(stringResource(id = R.string.create_profile_screen_truth1_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharFacts char., ${firstTruth.length} / $maxCharFacts",
+                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.firstTruth.length} / ${ftuViewModel.maxCharFacts}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = firstTruth.isNotEmpty() && firstTruth.length < minCharFacts,
+                isError = ftuUiState.firstTruth.isNotEmpty() && ftuUiState.firstTruth.length < ftuViewModel.minCharFacts,
             )
             OutlinedTextField(
-                value = secondTruth,
+                value = ftuUiState.secondTruth,
                 onValueChange = {
-                    if (it.length <= maxCharFacts) secondTruth = it
+                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateSecondTruth(it)
                 },
                 label = { Text(stringResource(id = R.string.create_profile_screen_truth2_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharFacts char., ${secondTruth.length} / $maxCharFacts",
+                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.secondTruth.length} / ${ftuViewModel.maxCharFacts}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = secondTruth.isNotEmpty() && secondTruth.length < minCharFacts,
+                isError = ftuUiState.secondTruth.isNotEmpty() && ftuUiState.secondTruth.length < ftuViewModel.minCharFacts,
             )
             OutlinedTextField(
-                value = lie,
-                onValueChange = { lie = it },
+                value = ftuUiState.lie,
+                onValueChange = {
+                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateLie(it)
+                },
                 label = { Text(stringResource(id = R.string.create_profile_screen_lie_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 supportingText = {
                     Text(
-                        text = "min $minCharFacts char., ${lie.length} / $maxCharFacts",
+                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.lie.length} / ${ftuViewModel.maxCharFacts}",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
                     )
                 },
-                isError = lie.isNotEmpty() && lie.length < minCharFacts,
+                isError = ftuUiState.lie.isNotEmpty() && ftuUiState.lie.length < ftuViewModel.minCharFacts,
             )
 
             Button(
-                enabled = isProfileValid,
+                enabled = ftuUiState.isProfileComplete,
                 onClick = {
                     val newProfile = viewModel.createNewProfile(
                         id = "me",
-                        firstName = firstName,
-                        lastName = lastName,
-                        age = age.toIntOrNull() ?: 0,
-                        nickName = nickName,
-                        office = selectedOffice,
+                        firstName = ftuUiState.firstName,
+                        lastName = ftuUiState.lastName,
+                        age = ftuUiState.age.toIntOrNull() ?: 0,
+                        nickName = ftuUiState.nickName,
+                        office = ftuUiState.selectedOffice,
                         twoTruthsOneLie = listOf(
-                            TwoTruthsOneLieEntity(firstTruth, true),
-                            TwoTruthsOneLieEntity(secondTruth, true),
-                            TwoTruthsOneLieEntity(lie, false)
+                            TwoTruthsOneLieEntity(ftuUiState.firstTruth, true),
+                            TwoTruthsOneLieEntity(ftuUiState.secondTruth, true),
+                            TwoTruthsOneLieEntity(ftuUiState.lie, false)
                         ),
                     )
                     profileRepository.addProfile(newProfile)
@@ -283,7 +265,7 @@ fun CreateProfileScreen(
                     .padding(vertical = 24.dp)
             ) {
                 Text(
-                    text = if (isProfileValid) stringResource(id = R.string.create_profile_screen_ready_button_enabled) else stringResource(
+                    text = if (ftuUiState.isProfileComplete) stringResource(id = R.string.create_profile_screen_ready_button_enabled) else stringResource(
                         id = R.string.create_profile_screen_ready_button_disabled
                     )
                 )
