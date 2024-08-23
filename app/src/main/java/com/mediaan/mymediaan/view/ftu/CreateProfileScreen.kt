@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,7 +15,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -30,8 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -84,69 +80,34 @@ fun CreateProfileScreen(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.firstName,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateFirstName(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_first_name_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.firstName.length} / ${ftuViewModel.maxCharName}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.firstName.isNotEmpty() && ftuUiState.firstName.length < ftuViewModel.minCharName
+                onChange = { ftuViewModel.updateFirstName(it) },
+                minValue = ftuViewModel.minCharName,
+                maxValue = ftuViewModel.maxCharName,
+                labelId = R.string.create_profile_screen_first_name_label
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.nickName,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateNickName(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_nickname_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.nickName.length} / ${ftuViewModel.maxCharName}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
+                onChange = { ftuViewModel.updateNickName(it) },
+                minValue = ftuViewModel.minCharName,
+                maxValue = ftuViewModel.maxCharName,
+                labelId = R.string.create_profile_screen_nickname_label
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.lastName,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharName) ftuViewModel.updateLastName(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_last_name_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharName} char., ${ftuUiState.lastName.length} / ${ftuViewModel.maxCharName}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.lastName.isNotEmpty() && ftuUiState.lastName.length < ftuViewModel.minCharName
+                onChange = { ftuViewModel.updateLastName(it) },
+                minValue = ftuViewModel.minCharName,
+                maxValue = ftuViewModel.maxCharName,
+                labelId = R.string.create_profile_screen_last_name_label
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.age,
-                onValueChange = { ftuViewModel.updateAge(it) },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
-                ),
-                label = { Text(stringResource(id = R.string.create_profile_screen_age_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minAge} y/o",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.age.isNotEmpty() && (ftuUiState.age.toIntOrNull()?.let { it < ftuViewModel.minAge || it > ftuViewModel.maxAge } ?: true)
+                onChange = { ftuViewModel.updateAge(it) },
+                minValue = ftuViewModel.minAge,
+                maxValue = ftuViewModel.maxAge,
+                labelId = R.string.create_profile_screen_age_label,
+                isAge = true
             )
             ExposedDropdownMenuBox(
                 expanded = isExpanded,
@@ -191,53 +152,26 @@ fun CreateProfileScreen(
                 style = Typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.firstTruth,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateFirstTruth(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_truth1_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.firstTruth.length} / ${ftuViewModel.maxCharFacts}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.firstTruth.isNotEmpty() && ftuUiState.firstTruth.length < ftuViewModel.minCharFacts,
+                onChange = { ftuViewModel.updateFirstTruth(it) },
+                minValue = ftuViewModel.minCharFacts,
+                maxValue = ftuViewModel.maxCharFacts,
+                labelId = R.string.create_profile_screen_truth1_label
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.secondTruth,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateSecondTruth(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_truth2_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.secondTruth.length} / ${ftuViewModel.maxCharFacts}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.secondTruth.isNotEmpty() && ftuUiState.secondTruth.length < ftuViewModel.minCharFacts,
+                onChange = { ftuViewModel.updateSecondTruth(it) },
+                minValue = ftuViewModel.minCharFacts,
+                maxValue = ftuViewModel.maxCharFacts,
+                labelId = R.string.create_profile_screen_truth2_label
             )
-            OutlinedTextField(
+            CreateProfileInputField(
                 value = ftuUiState.lie,
-                onValueChange = {
-                    if (it.length <= ftuViewModel.maxCharFacts) ftuViewModel.updateLie(it)
-                },
-                label = { Text(stringResource(id = R.string.create_profile_screen_lie_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text(
-                        text = "min ${ftuViewModel.minCharFacts} char., ${ftuUiState.lie.length} / ${ftuViewModel.maxCharFacts}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                isError = ftuUiState.lie.isNotEmpty() && ftuUiState.lie.length < ftuViewModel.minCharFacts,
+                onChange = { ftuViewModel.updateLie(it) },
+                minValue = ftuViewModel.minCharFacts,
+                maxValue = ftuViewModel.maxCharFacts,
+                labelId = R.string.create_profile_screen_lie_label
             )
 
             Button(
