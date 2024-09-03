@@ -6,6 +6,7 @@ import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlinx.coroutines.test.runTest
 
 class MainNavigationViewModelTest {
     private val viewModel = MainNavigationViewModel()
@@ -25,7 +26,7 @@ class MainNavigationViewModelTest {
     }
 
     @Test
-    fun mainNavigationViewModel_UserCreatedNewProfile_NewProfileIsValid_AndAddedToExistingList() {
+    fun mainNavigationViewModel_UserCreatedNewProfile_NewProfileIsValid_AndAddedToExistingList() = runTest {
         val id = "me"
         val firstName = "John"
         val lastName = "Smith"

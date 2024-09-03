@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,6 +43,7 @@ import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 import com.mediaan.mymediaan.viewModel.ftu.FtuViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +54,7 @@ fun CreateProfileScreen(
 ) {
     val ftuViewModel = FtuViewModel(offices = viewModel.offices)
     val ftuUiState by ftuViewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -177,22 +180,24 @@ fun CreateProfileScreen(
             Button(
                 enabled = ftuUiState.isProfileComplete,
                 onClick = {
-                    val newProfile = viewModel.createNewProfile(
-                        id = "me",
-                        firstName = ftuUiState.firstName,
-                        lastName = ftuUiState.lastName,
-                        age = ftuUiState.age.toIntOrNull() ?: 0,
-                        nickName = ftuUiState.nickName,
-                        office = ftuUiState.selectedOffice,
-                        twoTruthsOneLie = listOf(
-                            TwoTruthsOneLieEntity(ftuUiState.firstTruth, true),
-                            TwoTruthsOneLieEntity(ftuUiState.secondTruth, true),
-                            TwoTruthsOneLieEntity(ftuUiState.lie, false)
-                        ),
-                    )
-                    profileRepository.addProfile(newProfile)
-                    viewModel.updateIsOnboardingDone()
-                    navController.navigate(MyMediaanScreen.DiscoverColleague.name)
+                    coroutineScope.launch {
+                        val newProfile = viewModel.createNewProfile(
+                            id = "me",
+                            firstName = ftuUiState.firstName,
+                            lastName = ftuUiState.lastName,
+                            age = ftuUiState.age.toIntOrNull() ?: 0,
+                            nickName = ftuUiState.nickName,
+                            office = ftuUiState.selectedOffice,
+                            twoTruthsOneLie = listOf(
+                                TwoTruthsOneLieEntity(ftuUiState.firstTruth, true),
+                                TwoTruthsOneLieEntity(ftuUiState.secondTruth, true),
+                                TwoTruthsOneLieEntity(ftuUiState.lie, false)
+                            ),
+                        )
+                        profileRepository.addProfile(newProfile)
+                        viewModel.updateIsOnboardingDone()
+                        navController.navigate(MyMediaanScreen.DiscoverColleague.name)
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MediaanPrimary),
                 modifier = Modifier

@@ -323,6 +323,7 @@ class ProfileRepository {
             avatarIcon = R.drawable.face_man
         ),
     )
+
     private val databaseIdentifier = "profiles"
     private val db = Firebase.firestore
 
@@ -330,10 +331,6 @@ class ProfileRepository {
         get() {
             return _profiles
         }
-
-    fun addProfile(profile: Profile) {
-        _profiles.add(profile)
-    }
 
     suspend fun getAllProfiles(): List<Profile> {
         return try {
@@ -348,5 +345,17 @@ class ProfileRepository {
     suspend fun getProfileById(id: String): Profile {
         val profiles = getAllProfiles()
         return profiles.first { it.id == id }
+    }
+
+    suspend fun addProfile(profile: Profile) {
+        db.collection(databaseIdentifier)
+            .add(profile)
+            .addOnSuccessListener { documentReference ->
+                Log.d(this.javaClass.simpleName, "Added profile to document with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.w(this.javaClass.simpleName, "Error adding profile to Firestore:", exception)
+                _profiles.add(profile)
+            }
     }
 }
