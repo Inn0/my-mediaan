@@ -70,4 +70,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-firestore")
+    testImplementation(libs.kotlinx.coroutines.test)
 }

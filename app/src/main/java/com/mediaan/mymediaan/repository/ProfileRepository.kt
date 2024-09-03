@@ -10,7 +10,7 @@ import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import kotlinx.coroutines.tasks.await
 
 class ProfileRepository {
-    private val profiles = listOf(
+    private val _profiles = mutableListOf(
         Profile(
             id = "johndoe",
             firstName = "John",
@@ -323,8 +323,14 @@ class ProfileRepository {
             avatarIcon = R.drawable.face_man
         ),
     )
+
     private val databaseIdentifier = "profiles"
     private val db = Firebase.firestore
+
+    private val profiles: List<Profile>
+        get() {
+            return _profiles
+        }
 
     suspend fun getAllProfiles(): List<Profile> {
         return try {
@@ -339,5 +345,17 @@ class ProfileRepository {
     suspend fun getProfileById(id: String): Profile {
         val profiles = getAllProfiles()
         return profiles.first { it.id == id }
+    }
+
+    suspend fun addProfile(profile: Profile) {
+        db.collection(databaseIdentifier)
+            .add(profile)
+            .addOnSuccessListener { documentReference ->
+                Log.d(this.javaClass.simpleName, "Added profile to document with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.w(this.javaClass.simpleName, "Error adding profile to Firestore:", exception)
+                _profiles.add(profile)
+            }
     }
 }

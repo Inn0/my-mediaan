@@ -39,7 +39,7 @@ import com.mediaan.mymediaan.view.MyMediaanAppBar
 fun ProfileScreen(
     drawerState: DrawerState,
     profileId: String?,
-    profileRepository: ProfileRepository = ProfileRepository()
+    profileRepository: ProfileRepository
 ){
     var profile by remember { mutableStateOf<Profile?>(null) }
 
