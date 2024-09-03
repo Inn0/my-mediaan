@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mediaan.mymediaan.R
+import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.view.common.RippleEffectButton
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
@@ -21,7 +25,11 @@ fun DiscoverColleagueScreen(
     navController: NavController,
     profileRepository: ProfileRepository = ProfileRepository()
 ) {
-    val allProfiles = profileRepository.getAllProfiles()
+    val profiles = remember { mutableStateOf<List<Profile>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        profiles.value = profileRepository.getAllProfiles()
+    }
 
     Scaffold(
         topBar = {
@@ -38,7 +46,7 @@ fun DiscoverColleagueScreen(
             contentAlignment = Alignment.Center
         ) {
             RippleEffectButton(text = stringResource(id = R.string.discover_colleague)) {
-                val randomProfile = allProfiles.random()
+                val randomProfile = profiles.value.random()
                 navController.navigate("${MyMediaanScreen.Profile}/${randomProfile.id}")
             }
         }
