@@ -19,6 +19,7 @@
     <string name="create_profile_screen_last_name_label">Last name</string>
     <string name="create_profile_screen_age_label">Age</string>
     <string name="create_profile_screen_heading_section2">Interesting facts about you</string>
+    <string name="create_profile_screen_heading_interests">Your interests</string>
     <string name="create_profile_screen_truth1_label">First truth</string>
     <string name="create_profile_screen_truth2_label">Second truth</string>
     <string name="create_profile_screen_lie_label">Nice little lie</string>

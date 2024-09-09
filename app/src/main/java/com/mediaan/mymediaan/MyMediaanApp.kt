@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,6 +32,7 @@ import androidx.navigation.navArgument
 import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
+import com.mediaan.mymediaan.util.SharedPrefsUtil
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
 import com.mediaan.mymediaan.view.ftu.CreateProfileScreen
@@ -118,7 +120,7 @@ fun MainNavigation(
                 DiscoverColleagueScreen(drawerState, navController)
             }
             composable(route = MyMediaanScreen.Profile.name) {
-                ProfileScreen(drawerState, "me", profileRepository)
+                ProfileScreen(drawerState, SharedPrefsUtil().getLoggedInUserId(LocalContext.current), profileRepository)
             }
             composable(
                 route = "${MyMediaanScreen.Profile.name}/{profileId}",

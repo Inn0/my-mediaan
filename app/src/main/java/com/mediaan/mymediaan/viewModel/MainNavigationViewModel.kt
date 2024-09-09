@@ -1,5 +1,6 @@
 package com.mediaan.mymediaan.viewModel
 
+import android.app.Application
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
@@ -8,12 +9,14 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.model.DrawerItem
+import com.mediaan.mymediaan.model.Interest
 import com.mediaan.mymediaan.model.Office
 import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
+import com.mediaan.mymediaan.util.SharedPrefsUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,9 +30,10 @@ enum class MyMediaanScreen(@StringRes val title: Int) {
     AllColleagues(title = R.string.all_colleagues),
 }
 
-class MainNavigationViewModel : ViewModel() {
+class MainNavigationViewModel(application: Application) : AndroidViewModel(application) {
     private val _uiState = MutableStateFlow(MainNavigationUiState())
     val uiState: StateFlow<MainNavigationUiState> = _uiState.asStateFlow()
+    private val sharedPrefsUtil = SharedPrefsUtil()
 
     val drawerItems = arrayOf(
         DrawerItem(
@@ -55,7 +59,10 @@ class MainNavigationViewModel : ViewModel() {
     val offices: List<Office> = Office.entries
 
     init {
-       _uiState.value = MainNavigationUiState(currentSelectedItemIndex = 0)
+       _uiState.value = MainNavigationUiState(
+           currentSelectedItemIndex = 0,
+           isOnboardingDone = sharedPrefsUtil.getLoggedInUserId(getApplication<Application>().applicationContext) != ""
+       )
     }
 
     fun updateSelectedItemIndex(newIndex: Int) {
@@ -75,18 +82,16 @@ class MainNavigationViewModel : ViewModel() {
     }
 
     fun createNewProfile(
-        id: String,
         firstName: String,
         lastName: String,
         age: Int,
         nickName: String,
         office: Office,
-        interests: List<String> = emptyList(),
+        interests: List<Interest> = emptyList(),
         twoTruthsOneLie: List<TwoTruthsOneLieEntity>,
         avatarIcon: Int = R.drawable.account_circle,
     ): Profile {
-        return Profile(
-            id = id,
+        val profile = Profile(
             firstName = firstName,
             lastName = lastName,
             age = age,
@@ -96,5 +101,7 @@ class MainNavigationViewModel : ViewModel() {
             twoTruthsOneLie = twoTruthsOneLie,
             avatarIcon = avatarIcon
         )
+        sharedPrefsUtil.saveLoggedInUserId(getApplication<Application>().applicationContext, profile.id)
+        return profile
     }
 }
