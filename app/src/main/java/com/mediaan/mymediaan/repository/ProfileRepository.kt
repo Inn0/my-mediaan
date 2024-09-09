@@ -63,7 +63,7 @@ class ProfileRepository {
             age = 30,
             nickName = "Bobby",
             office = Office.HEERLEN,
-            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.GAMING),
+            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.VIDEO_GAMES),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I play the guitar", true),
                 TwoTruthsOneLieEntity("I can't swim", false),
@@ -78,7 +78,7 @@ class ProfileRepository {
             age = 27,
             nickName = "Evie",
             office = Office.HASSELT,
-            interests = listOf(Interest.YOGA, Interest.PAINTING, Interest.PHOTOGRAPHY, Interest.TRAVELING),
+            interests = listOf(Interest.SPORTS, Interest.PAINTING, Interest.PHOTOGRAPHY, Interest.TRAVELING),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have three brothers", false),
                 TwoTruthsOneLieEntity("I once lived in Japan", true),
@@ -107,7 +107,7 @@ class ProfileRepository {
             age = 29,
             nickName = "Gracie",
             office = Office.HEERLEN,
-            interests = listOf(Interest.PHOTOGRAPHY, Interest.DOGS, Interest.SWIMMING),
+            interests = listOf(Interest.PHOTOGRAPHY, Interest.ANIMALS, Interest.SPORTS),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have written a book", true),
                 TwoTruthsOneLieEntity("I dislike coffee", false),
@@ -122,7 +122,7 @@ class ProfileRepository {
             age = 31,
             nickName = "Hank",
             office = Office.HASSELT,
-            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.GAMING),
+            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.BOARD_GAMES),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have a fear of heights", false),
                 TwoTruthsOneLieEntity("I love to bake", true),
@@ -137,7 +137,7 @@ class ProfileRepository {
             age = 26,
             nickName = "Ives",
             office = Office.DUSSELDORF,
-            interests = listOf(Interest.TRAVELING, Interest.DOGS, Interest.READING),
+            interests = listOf(Interest.TRAVELING, Interest.ANIMALS, Interest.READING),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have a pet dog", true),
                 TwoTruthsOneLieEntity("I dislike ice cream", false),
@@ -152,7 +152,7 @@ class ProfileRepository {
             age = 34,
             nickName = "Jackie",
             office = Office.HEERLEN,
-            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.CATS),
+            interests = listOf(Interest.SPORTS, Interest.TRAVELING, Interest.ANIMALS),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have visited every continent", false),
                 TwoTruthsOneLieEntity("I can play the piano", true),
@@ -196,7 +196,7 @@ class ProfileRepository {
             age = 28,
             nickName = "Lee",
             office = Office.HEERLEN,
-            interests = listOf(Interest.COOKING, Interest.YOGA),
+            interests = listOf(Interest.COOKING, Interest.SPORTS),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have been skydiving", true),
                 TwoTruthsOneLieEntity("I have two cats", false),
@@ -226,7 +226,7 @@ class ProfileRepository {
             age = 27,
             nickName = "Sari",
             office = Office.DUSSELDORF,
-            interests = listOf(Interest.BIKING, Interest.HIKING),
+            interests = listOf(Interest.SPORTS, Interest.HIKING),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have a twin brother", false),
                 TwoTruthsOneLieEntity("I once met a celebrity", true),
@@ -241,7 +241,7 @@ class ProfileRepository {
             age = 32,
             nickName = "Rob",
             office = Office.HEERLEN,
-            interests = listOf(Interest.BIKING, Interest.COOKING),
+            interests = listOf(Interest.CARS, Interest.COOKING),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I play the drums", true),
                 TwoTruthsOneLieEntity("I have been to Africa", false),
@@ -270,7 +270,7 @@ class ProfileRepository {
             age = 26,
             nickName = "Em",
             office = Office.DUSSELDORF,
-            interests = listOf(Interest.GARDENING, Interest.CATS),
+            interests = listOf(Interest.GARDENING, Interest.VIDEO_GAMES),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have a pet rabbit", true),
                 TwoTruthsOneLieEntity("I dislike chocolate", false),
@@ -285,7 +285,7 @@ class ProfileRepository {
             age = 34,
             nickName = "Dave",
             office = Office.HEERLEN,
-            interests = listOf(Interest.DOGS, Interest.DOGS),
+            interests = listOf(Interest.ANIMALS, Interest.F1),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have traveled to 20 countries", true),
                 TwoTruthsOneLieEntity("I hate coffee", false),
@@ -300,7 +300,7 @@ class ProfileRepository {
             age = 31,
             nickName = "Nat",
             office = Office.HASSELT,
-            interests = listOf(Interest.YOGA, Interest.BIKING, Interest.COOKING),
+            interests = listOf(Interest.SPORTS, Interest.BOARD_GAMES, Interest.COOKING),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have a fear of spiders", true),
                 TwoTruthsOneLieEntity("I can juggle", true),
@@ -315,7 +315,7 @@ class ProfileRepository {
             age = 28,
             nickName = "Paulie",
             office = Office.DUSSELDORF,
-            interests = listOf(Interest.SPORTS, Interest.PHOTOGRAPHY, Interest.BIKING),
+            interests = listOf(Interest.SPORTS, Interest.PHOTOGRAPHY, Interest.DRINKS),
             twoTruthsOneLie = listOf(
                 TwoTruthsOneLieEntity("I have been to Japan", true),
                 TwoTruthsOneLieEntity("I hate sushi", false),
