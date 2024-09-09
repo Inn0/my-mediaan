@@ -1,5 +1,6 @@
 package com.mediaan.mymediaan
 
+import android.app.Application
 import com.mediaan.mymediaan.model.Office
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
@@ -9,7 +10,7 @@ import org.junit.Test
 import kotlinx.coroutines.test.runTest
 
 class MainNavigationViewModelTest {
-    private val viewModel = MainNavigationViewModel()
+    private val viewModel = MainNavigationViewModel(Application())
     private val profileRepository = ProfileRepository()
 
     @Test
@@ -38,7 +39,6 @@ class MainNavigationViewModelTest {
         val lie = "Test was written by AI"
 
         val newProfile = viewModel.createNewProfile(
-            id = id,
             firstName = firstName,
             lastName = lastName,
             age = age.toIntOrNull() ?: 0,

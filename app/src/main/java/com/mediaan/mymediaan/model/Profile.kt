@@ -11,7 +11,7 @@ data class Profile(
     val age: Int = 0,
     val nickName: String? = null,
     val office: Office = Office.HEERLEN,
-    val interests: List<String> = emptyList(),
+    val interests: List<Interest> = emptyList(),
     val twoTruthsOneLie: List<TwoTruthsOneLieEntity> = emptyList(),
     @DrawableRes
     val avatarIcon: Int = 0,

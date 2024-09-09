@@ -182,7 +182,6 @@ fun CreateProfileScreen(
                 onClick = {
                     coroutineScope.launch {
                         val newProfile = viewModel.createNewProfile(
-                            id = "me",
                             firstName = ftuUiState.firstName,
                             lastName = ftuUiState.lastName,
                             age = ftuUiState.age.toIntOrNull() ?: 0,
@@ -210,17 +209,5 @@ fun CreateProfileScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun CreateProfileScreenPreview() {
-    MyMediaanTheme {
-        CreateProfileScreen(
-            navController = rememberNavController(),
-            viewModel = MainNavigationViewModel(),
-            profileRepository = ProfileRepository()
-        )
     }
 }
