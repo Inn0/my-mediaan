@@ -20,5 +20,9 @@ enum class Interest {
     YOGA,
     DANCING,
     TECHNOLOGY,
-    FITNESS
+    FITNESS;
+
+    override fun toString(): String {
+        return name.lowercase().replaceFirstChar { it.uppercase() }
+    }
 }

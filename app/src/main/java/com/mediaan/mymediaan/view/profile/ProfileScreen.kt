@@ -91,7 +91,7 @@ fun ProfileScreen(
                     )
                     it.interests.forEach {
                         Text(
-                            text = it.name,
+                            text = it.toString(),
                             style = Typography.bodyLarge,
                             modifier = Modifier.padding(8.dp)
                         )

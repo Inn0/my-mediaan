@@ -1,15 +1,21 @@
 package com.mediaan.mymediaan.view.ftu
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,15 +35,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.mediaan.mymediaan.R
+import com.mediaan.mymediaan.model.Interest
 import com.mediaan.mymediaan.model.TwoTruthsOneLieEntity
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MediaanPrimary
-import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
 import com.mediaan.mymediaan.ui.theme.Typography
 import com.mediaan.mymediaan.view.MyMediaanAppBar
 import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
@@ -69,6 +73,15 @@ fun CreateProfileScreen(
     ) { innerPadding ->
         val scrollState = rememberScrollState()
         var isExpanded by remember { mutableStateOf(false) }
+        var selectedInterests by remember { mutableStateOf(listOf<Interest>()) }
+
+        fun toggleInterest(interest: Interest) {
+            selectedInterests = if (selectedInterests.contains(interest)) {
+                selectedInterests - interest
+            } else {
+                selectedInterests + interest
+            }
+        }
 
         Column(
             modifier = Modifier
@@ -176,6 +189,34 @@ fun CreateProfileScreen(
                 maxValue = ftuViewModel.maxCharFacts,
                 labelId = R.string.create_profile_screen_lie_label
             )
+            Text(
+                text = stringResource(id = R.string.create_profile_screen_heading_interests),
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .padding(bottom = 16.dp),
+                style = Typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(480.dp)
+            ) {
+                items(Interest.entries.toTypedArray()) { interest ->
+                    Row(
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Checkbox(
+                            checked = selectedInterests.contains(interest),
+                            onCheckedChange = { toggleInterest(interest) },
+                            colors = CheckboxDefaults.colors(checkedColor = MediaanPrimary)
+                        )
+                        Text(text = interest.toString(), modifier = Modifier)
+                    }
+                }
+            }
 
             Button(
                 enabled = ftuUiState.isProfileComplete,
@@ -192,6 +233,7 @@ fun CreateProfileScreen(
                                 TwoTruthsOneLieEntity(ftuUiState.secondTruth, true),
                                 TwoTruthsOneLieEntity(ftuUiState.lie, false)
                             ),
+                            interests = selectedInterests
                         )
                         profileRepository.addProfile(newProfile)
                         viewModel.updateIsOnboardingDone()
