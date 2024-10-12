@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.update
 enum class MyMediaanScreen(@StringRes val title: Int) {
     Ftu(title = R.string.ftu),
     CreateProfile(title = R.string.create_profile),
-    DiscoverColleague(title = R.string.discover_colleague),
+    DiscoverColleague(title = R.string.discover_colleagues),
     Profile(title = R.string.profile),
     AllColleagues(title = R.string.all_colleagues),
 }
