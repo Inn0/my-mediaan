@@ -89,6 +89,10 @@ class MainNavigationViewModel(application: Application) : AndroidViewModel(appli
         }
     }
 
+    fun getLoggedInUserId(): String {
+        return sharedPrefsUtil.getLoggedInUserId(getApplication())
+    }
+
     fun createNewProfile(
         firstName: String,
         lastName: String,
