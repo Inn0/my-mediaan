@@ -117,7 +117,7 @@ fun MainNavigation(
                 CreateProfileScreen(navController, mainNavigationViewModel, profileRepository)
             }
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
-                DiscoverColleagueScreen(drawerState, navController)
+                DiscoverColleagueScreen(drawerState, navController, profileRepository, mainNavigationViewModel)
             }
             composable(route = MyMediaanScreen.Profile.name) {
                 ProfileScreen(drawerState, SharedPrefsUtil().getLoggedInUserId(LocalContext.current), profileRepository)

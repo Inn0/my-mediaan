@@ -14,14 +14,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mediaan.mymediaan.R
 import com.mediaan.mymediaan.repository.ProfileRepository
-import com.mediaan.mymediaan.util.SharedPrefsUtil
 import com.mediaan.mymediaan.view.common.RippleEffectButton
+import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import com.mediaan.mymediaan.viewModel.MyMediaanScreen
 import com.mediaan.mymediaan.viewModel.discoverColleague.DiscoverColleagueViewModel
 
@@ -29,10 +28,10 @@ import com.mediaan.mymediaan.viewModel.discoverColleague.DiscoverColleagueViewMo
 fun DiscoverColleagueScreen(
     drawerState: DrawerState,
     navController: NavController,
-    profileRepository: ProfileRepository = ProfileRepository()
+    profileRepository: ProfileRepository,
+    mainNavigationViewModel: MainNavigationViewModel
 ) {
-    val loggedInUserId = SharedPrefsUtil().getLoggedInUserId(LocalContext.current)
-    val viewModel = DiscoverColleagueViewModel(profileRepository, loggedInUserId)
+    val viewModel = DiscoverColleagueViewModel(mainNavigationViewModel, profileRepository)
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(

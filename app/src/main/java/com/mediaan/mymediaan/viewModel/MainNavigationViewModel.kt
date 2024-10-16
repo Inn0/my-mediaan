@@ -81,6 +81,14 @@ class MainNavigationViewModel(application: Application) : AndroidViewModel(appli
         }
     }
 
+    fun saveLoggedInUserProfile(profile: Profile) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                loggedInUserProfile = profile
+            )
+        }
+    }
+
     fun createNewProfile(
         firstName: String,
         lastName: String,

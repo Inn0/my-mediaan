@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mediaan.mymediaan.model.Profile
 import com.mediaan.mymediaan.repository.ProfileRepository
+import com.mediaan.mymediaan.viewModel.MainNavigationViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DiscoverColleagueViewModel(private val profileRepository: ProfileRepository, loggedInUserId: String) : ViewModel() {
+class DiscoverColleagueViewModel(
+    private val mainNavigationViewModel: MainNavigationViewModel,
+    private val profileRepository: ProfileRepository,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(DiscoverColleagueUiState())
     val uiState: StateFlow<DiscoverColleagueUiState> = _uiState.asStateFlow()
 
@@ -17,7 +21,9 @@ class DiscoverColleagueViewModel(private val profileRepository: ProfileRepositor
         viewModelScope.launch {
             try {
                 val profiles = profileRepository.getAllProfiles()
-                _uiState.value = DiscoverColleagueUiState(profiles = profiles, loggedInUserId)
+                _uiState.value = DiscoverColleagueUiState(
+                    profiles = profiles
+                )
             } catch (exception: Exception) {
                 Log.e("DiscoverColleagueVM", "Error loading profiles", exception)
             }
@@ -25,22 +31,14 @@ class DiscoverColleagueViewModel(private val profileRepository: ProfileRepositor
     }
 
     fun findMatchingColleague(onMatchingProfileFound: (Profile?) -> Unit) {
-        viewModelScope.launch {
-            try {
-                val loggedInUserProfile = profileRepository.getProfileById(uiState.value.loggedInUserId)
-
-                val matchingProfiles = uiState.value.profiles.filter { profile ->
-                    profile.id != uiState.value.loggedInUserId && profile.interests.any { interest ->
-                        loggedInUserProfile.interests.contains(interest)
-                    }
-                }
-
-                _uiState.value = _uiState.value.copy(matchingProfiles = matchingProfiles)
-                onMatchingProfileFound(uiState.value.matchingProfiles.firstOrNull())
-            } catch (e: Exception) {
-                Log.e("DiscoverColleagueVM", "Error finding matching colleagues", e)
-                onMatchingProfileFound(null)
+        val loggedInUserProfile = mainNavigationViewModel.uiState.value.loggedInUserProfile
+        val matchingProfiles = uiState.value.profiles.filter { profile ->
+            profile.id != loggedInUserProfile?.id && profile.interests.any { interest ->
+                loggedInUserProfile?.interests?.contains(interest) == true
             }
         }
+
+        _uiState.value = _uiState.value.copy(matchingProfiles = matchingProfiles)
+        onMatchingProfileFound(uiState.value.matchingProfiles.firstOrNull())
     }
 }

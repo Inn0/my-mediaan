@@ -4,6 +4,6 @@ import com.mediaan.mymediaan.model.Profile
 
 data class DiscoverColleagueUiState(
     val profiles: List<Profile> = emptyList(),
-    val loggedInUserId: String = "",
+    val loggedInUserProfile: String = "",
     val matchingProfiles: List<Profile> = emptyList()
 )
