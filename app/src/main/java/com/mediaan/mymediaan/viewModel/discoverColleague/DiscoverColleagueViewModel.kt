@@ -32,13 +32,28 @@ class DiscoverColleagueViewModel(
 
     fun findMatchingColleague(onMatchingProfileFound: (Profile?) -> Unit) {
         val loggedInUserProfile = mainNavigationViewModel.uiState.value.loggedInUserProfile
-        val matchingProfiles = uiState.value.profiles.filter { profile ->
-            profile.id != loggedInUserProfile?.id && profile.interests.any { interest ->
-                loggedInUserProfile?.interests?.contains(interest) == true
+
+        if (loggedInUserProfile != null) {
+            val matchingProfiles = uiState.value.profiles.filter { profile ->
+                profile.id != loggedInUserProfile.id && profile.interests.any { interest ->
+                    loggedInUserProfile.interests.contains(interest)
+                }
+            }
+            val sortedMatchingProfiles = sortByMostInterests(loggedInUserProfile, matchingProfiles)
+
+            _uiState.value = _uiState.value.copy(matchingProfiles = sortedMatchingProfiles)
+            onMatchingProfileFound(uiState.value.matchingProfiles.firstOrNull())
+        } else {
+            Log.e("DiscoverColleagueVM", "Logged in user profile is null")
+            onMatchingProfileFound(null)
+        }
+    }
+
+    private fun sortByMostInterests(loggedInUser: Profile, profiles: List<Profile>): List<Profile> {
+        return profiles.sortedByDescending { profile ->
+            profile.interests.count { interest ->
+                loggedInUser.interests.contains(interest)
             }
         }
-
-        _uiState.value = _uiState.value.copy(matchingProfiles = matchingProfiles)
-        onMatchingProfileFound(uiState.value.matchingProfiles.firstOrNull())
     }
 }
