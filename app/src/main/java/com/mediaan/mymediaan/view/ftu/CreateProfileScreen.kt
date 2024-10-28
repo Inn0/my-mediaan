@@ -238,6 +238,7 @@ fun CreateProfileScreen(
                             interests = selectedInterests
                         )
                         profileRepository.addProfile(newProfile)
+                        viewModel.saveLoggedInUserProfile(newProfile)
                         viewModel.updateIsOnboardingDone()
                         navController.navigate(MyMediaanScreen.DiscoverColleague.name)
                     }

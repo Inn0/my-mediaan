@@ -15,11 +15,11 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -32,7 +32,6 @@ import androidx.navigation.navArgument
 import com.mediaan.mymediaan.model.DrawerItem
 import com.mediaan.mymediaan.repository.ProfileRepository
 import com.mediaan.mymediaan.ui.theme.MyMediaanTheme
-import com.mediaan.mymediaan.util.SharedPrefsUtil
 import com.mediaan.mymediaan.view.AllColleaguesScreen
 import com.mediaan.mymediaan.view.DiscoverColleagueScreen
 import com.mediaan.mymediaan.view.ftu.CreateProfileScreen
@@ -84,6 +83,12 @@ fun MainNavigation(
     mainNavigationViewModel: MainNavigationViewModel = viewModel(),
     profileRepository: ProfileRepository = ProfileRepository(),
 ) {
+    val loggedInUserId = mainNavigationViewModel.getLoggedInUserId()
+    LaunchedEffect(loggedInUserId) {
+        val userProfile = profileRepository.getProfileById(loggedInUserId)
+        mainNavigationViewModel.saveLoggedInUserProfile(userProfile)
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -117,10 +122,10 @@ fun MainNavigation(
                 CreateProfileScreen(navController, mainNavigationViewModel, profileRepository)
             }
             composable(route = MyMediaanScreen.DiscoverColleague.name) {
-                DiscoverColleagueScreen(drawerState, navController)
+                DiscoverColleagueScreen(drawerState, navController, profileRepository, mainNavigationViewModel)
             }
             composable(route = MyMediaanScreen.Profile.name) {
-                ProfileScreen(drawerState, SharedPrefsUtil().getLoggedInUserId(LocalContext.current), profileRepository)
+                ProfileScreen(drawerState, loggedInUserId, profileRepository)
             }
             composable(
                 route = "${MyMediaanScreen.Profile.name}/{profileId}",

@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.update
 enum class MyMediaanScreen(@StringRes val title: Int) {
     Ftu(title = R.string.ftu),
     CreateProfile(title = R.string.create_profile),
-    DiscoverColleague(title = R.string.discover_colleague),
+    DiscoverColleague(title = R.string.discover_colleagues),
     Profile(title = R.string.profile),
     AllColleagues(title = R.string.all_colleagues),
 }
@@ -79,6 +79,18 @@ class MainNavigationViewModel(application: Application) : AndroidViewModel(appli
                 isOnboardingDone = true
             )
         }
+    }
+
+    fun saveLoggedInUserProfile(profile: Profile) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                loggedInUserProfile = profile
+            )
+        }
+    }
+
+    fun getLoggedInUserId(): String {
+        return sharedPrefsUtil.getLoggedInUserId(getApplication())
     }
 
     fun createNewProfile(
