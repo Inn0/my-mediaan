@@ -345,13 +345,14 @@ class ProfileRepository {
 
     suspend fun getProfileById(id: String): Profile {
         val profiles = getAllProfiles()
-        return profiles.first { it.id == id }
+        return profiles.firstOrNull { it.id == id } ?: _profiles.last()
     }
 
-    suspend fun addProfile(profile: Profile) {
+    fun addProfile(profile: Profile) {
         db.collection(databaseIdentifier)
             .add(profile)
             .addOnSuccessListener { documentReference ->
+                _profiles.add(profile)
                 Log.d(this.javaClass.simpleName, "Added profile to document with ID: ${documentReference.id}")
             }
             .addOnFailureListener { exception ->

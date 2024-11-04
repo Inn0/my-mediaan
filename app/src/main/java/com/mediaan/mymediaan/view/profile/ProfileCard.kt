@@ -43,7 +43,7 @@ fun ProfileCard(
             )
             Column {
                 Text(
-                    text = "${profile.firstName} \"${profile.nickName}\" ${profile.lastName}",
+                    text = "${profile.firstName}${if (profile.nickName?.isNotEmpty() == true) " \"${profile.nickName}\"" else ""} ${profile.lastName}",
                     style = Typography.titleMedium,
                     modifier = Modifier.padding(4.dp)
                 )

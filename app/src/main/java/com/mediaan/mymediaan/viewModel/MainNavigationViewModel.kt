@@ -114,6 +114,7 @@ class MainNavigationViewModel(application: Application) : AndroidViewModel(appli
             avatarIcon = avatarIcon
         )
         sharedPrefsUtil.saveLoggedInUserId(getApplication<Application>().applicationContext, profile.id)
+        saveLoggedInUserProfile(profile)
         return profile
     }
 }
