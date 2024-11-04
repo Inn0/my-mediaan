@@ -73,7 +73,7 @@ fun ProfileScreen(
                         tint = MediaanPrimary,
                     )
                     Text(
-                        text = "${it.firstName} \"${it.nickName}\" ${it.lastName}",
+                        text = "${it.firstName}${if (it.nickName?.isNotEmpty() == true) " \"${it.nickName}\"" else ""} ${it.lastName}",
                         style = Typography.displaySmall,
                         fontWeight = FontWeight.Bold
                     )

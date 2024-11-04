@@ -44,7 +44,6 @@ class DiscoverColleagueViewModel(
             _uiState.value = _uiState.value.copy(matchingProfiles = sortedMatchingProfiles)
             onMatchingProfileFound(uiState.value.matchingProfiles.firstOrNull())
         } else {
-            Log.e("DiscoverColleagueVM", "Logged in user profile is null")
             onMatchingProfileFound(null)
         }
     }
