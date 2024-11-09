@@ -1,4 +1,4 @@
-# MyMediaan
+# MyMediaan Android App
 
 "MyMediaan" is a helper tool for [Mediaan](https://mediaan.com/) employees.
 
