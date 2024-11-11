@@ -1,4 +1,4 @@
-# MyMediaan
+# MyMediaan Android App
 
 "MyMediaan" is a helper tool for [Mediaan](https://mediaan.com/) employees.
 
@@ -10,6 +10,7 @@ This pet project was created by [Daan Brocatus](https://github.com/Inn0) and [Iv
 1. [Android Studio](https://developer.android.com/studio) - Integrated Development Environment
 2. [Kotlin](https://kotlinlang.org/) - Programming language
 3. [Jetpack Compose](https://developer.android.com/develop/ui/compose) - UI toolkit
+4. [Firestore](https://firebase.google.com/docs/firestore) - NoSQL cloud database
 
 ## Collaboration rules
 1. Branching strategy - [Trunk-based workflow](https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development); create short-lived branches and regularly integrate them into `main` branch
